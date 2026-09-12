@@ -213,12 +213,19 @@ tests/test_agent_core.py::test_agent_react_execution_flow PASSED
 tests/test_agent_core.py::test_agent_loop_detection PASSED
 tests/test_memory.py::test_working_memory_sliding_window PASSED
 tests/test_memory.py::test_persistent_knowledge_and_reflection PASSED
+tests/test_memory.py::test_snapshot_and_rollback PASSED
 tests/test_schema_and_llm.py::test_schema_instantiation PASSED
 tests/test_tools.py::test_file_ops_ast_validation PASSED
 tests/test_tools.py::test_shell_command_sandbox_and_blacklist PASSED
+tests/test_tools.py::test_diagram_generator PASSED
 tests/test_web_api.py::test_web_status_endpoint PASSED
+tests/test_web_api.py::test_chat_endpoint PASSED
+tests/test_web_api.py::test_snapshots_api_and_rollback PASSED
+tests/test_cli_scaffold.py::test_scaffold_fastapi PASSED
+tests/test_cli_scaffold.py::test_scaffold_cli PASSED
+tests/test_cli_scaffold.py::test_scaffold_custom_tool PASSED
 ...
-======================= 15 passed in 1.05s =======================
+======================= 20 passed in 1.86s =======================
 ```
 
 ---
@@ -227,12 +234,25 @@ tests/test_web_api.py::test_web_status_endpoint PASSED
 
 - [x] Autonomous ReAct loop with self-healing error recovery
 - [x] AST-aware syntax pre-validation
+- [x] Time-travel code snapshots & 1-click rollback
 - [x] Dual-interface (Rich TUI + Cyberpunk Glassmorphism Web)
 - [x] Offline Deterministic Mock provider for zero-cost testing
 - [x] SQLite persistent reflection journal
+- [x] Instant code scaffolding (`fastapi`, `cli`, `custom-tool`)
 - [ ] Multi-agent collaborative swarm mode
 - [ ] Tree-of-Thought (ToT) branch search
 - [ ] Browser-use visual DOM automation
+
+---
+
+## 📣 Community & Viral Launch
+
+Looking to share or contribute to Nexus-Agent? Check out our ready-to-use launch and sharing kits in [`launch/`](launch/README.md):
+- [GeekNews Submission Kit](launch/GEEKNEWS_KO.md)
+- [Hacker News Show HN](launch/HACKERNEWS_SHOW_HN.md)
+- [Reddit r/LocalLLaMA & r/Python](launch/REDDIT_LOCALLAMA.md)
+- [X/Twitter Viral Thread](launch/TWITTER_X_THREAD.md)
+- [Velog / Technical Blog Post](launch/VELOG_POST_KO.md)
 
 ---
 

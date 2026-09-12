@@ -123,6 +123,55 @@ body {
   color: var(--text-muted);
 }
 
+/* Topbar Action Buttons */
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.gh-star-btn {
+  background: rgba(255, 184, 0, 0.12);
+  border: 1px solid rgba(255, 184, 0, 0.4);
+  color: #ffb800;
+  box-shadow: 0 0 10px rgba(255, 184, 0, 0.15);
+}
+
+.gh-star-btn:hover {
+  background: rgba(255, 184, 0, 0.25);
+  border-color: #ffb800;
+  box-shadow: 0 0 18px rgba(255, 184, 0, 0.4);
+  transform: translateY(-1px) scale(1.03);
+}
+
+.x-share-btn {
+  background: rgba(0, 243, 255, 0.1);
+  border: 1px solid rgba(0, 243, 255, 0.35);
+  color: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);
+}
+
+.x-share-btn:hover {
+  background: rgba(0, 243, 255, 0.22);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 16px var(--accent-cyan-glow);
+  transform: translateY(-1px) scale(1.03);
+}
+
 .system-status {
   display: flex;
   align-items: center;

@@ -150,12 +150,32 @@ tests/test_agent_core.py::test_agent_react_execution_flow PASSED
 tests/test_agent_core.py::test_agent_loop_detection PASSED
 tests/test_memory.py::test_working_memory_sliding_window PASSED
 tests/test_memory.py::test_persistent_knowledge_and_reflection PASSED
+tests/test_memory.py::test_snapshot_and_rollback PASSED
 tests/test_schema_and_llm.py::test_schema_instantiation PASSED
 tests/test_tools.py::test_file_ops_ast_validation PASSED
 tests/test_tools.py::test_shell_command_sandbox_and_blacklist PASSED
+tests/test_tools.py::test_diagram_generator PASSED
 tests/test_web_api.py::test_web_status_endpoint PASSED
-======================= 15 passed in 1.05s =======================
+tests/test_web_api.py::test_chat_endpoint PASSED
+tests/test_web_api.py::test_snapshots_api_and_rollback PASSED
+tests/test_cli_scaffold.py::test_scaffold_fastapi PASSED
+tests/test_cli_scaffold.py::test_scaffold_cli PASSED
+tests/test_cli_scaffold.py::test_scaffold_custom_tool PASSED
+...
+======================= 20 passed in 1.86s =======================
 ```
+
+---
+
+## 📣 커뮤니티 및 바이럴 배포 가이드
+
+Nexus-Agent를 개발자 커뮤니티에 공유하거나 오픈소스 생태계에 기여하고 싶으시다면 [`launch/`](launch/README.md) 디렉토리의 배포 키트를 활용하세요:
+- [긱뉴스(GeekNews) 등록 키트](launch/GEEKNEWS_KO.md)
+- [Hacker News Show HN 영문 등록 키트](launch/HACKERNEWS_SHOW_HN.md)
+- [Reddit r/LocalLLaMA & r/Python 공유 키트](launch/REDDIT_LOCALLAMA.md)
+- [X (구 Twitter) 5부작 바이럴 스레드](launch/TWITTER_X_THREAD.md)
+- [Velog / 브런치 심층 기술 블로그 글](launch/VELOG_POST_KO.md)
+- [디스코드 & 카카오 오픈채팅방 공유 문구](launch/DISCORD_COMMUNITIES.md)
 
 ---
 
