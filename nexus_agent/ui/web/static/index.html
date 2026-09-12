@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS-AGENT // Mission Control</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="bg-glow-orb orb-1"></div>
+  <div class="bg-glow-orb orb-2"></div>
+  <div class="bg-glow-orb orb-3"></div>
+
+  <div class="app-container">
+    <!-- Top Navigation Bar -->
+    <header class="topbar glass-panel">
+      <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <div class="brand-text">
+          <span class="brand-title">NEXUS<span class="highlight">//</span>AGENT</span>
+          <span class="brand-subtitle">AUTONOMOUS ENGINEERING ENGINE</span>
+        </div>
+      </div>
+
+      <div class="system-status">
+        <div class="status-indicator">
+          <span class="pulse-dot" id="ws-pulse"></span>
+          <span id="ws-status-text">CONNECTING...</span>
+        </div>
+        <div class="badge badge-cyber">v1.0.0</div>
+      </div>
+    </header>
+
+    <!-- Main Dashboard Grid -->
+    <main class="dashboard-grid">
+      <!-- Left Panel: Control Deck -->
+      <section class="control-deck glass-panel">
+        <div class="panel-header">
+          <h3><span class="icon">🎮</span> MISSION LAUNCHPAD</h3>
+        </div>
+
+        <div class="form-group">
+          <label for="goal-input">OBJECTIVE / PROMPT</label>
+          <textarea id="goal-input" placeholder="Enter engineering goal (e.g. 'Create a high-speed prime number generator in prime.py and verify with unit tests')..." rows="4"></textarea>
+        </div>
+
+        <div class="preset-pills">
+          <span class="preset-tag" data-prompt="Create a robust calculator class with addition and division in calc.py, run tests, and self-heal any zero division errors.">🧪 Self-Healing Test</span>
+          <span class="preset-tag" data-prompt="Search for AST verification rules in python and write a clean script sample.py.">🔍 AST Engine Check</span>
+          <span class="preset-tag" data-prompt="Generate a clean markdown report summarizing repository status.">📊 Repo Summary</span>
+        </div>
+
+        <div class="settings-grid">
+          <div class="form-group">
+            <label for="provider-select">PROVIDER</label>
+            <select id="provider-select">
+              <option value="mock" selected>Deterministic Mock (Offline)</option>
+              <option value="openai">OpenAI (GPT-4o)</option>
+              <option value="anthropic">Anthropic Claude</option>
+              <option value="gemini">Google Gemini</option>
+              <option value="ollama">Local Ollama</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="max-iters">MAX ITERATIONS</label>
+            <input type="number" id="max-iters" value="15" min="1" max="50">
+          </div>
+        </div>
+
+        <button id="btn-launch" class="btn btn-cyber">
+          <span class="btn-glow"></span>
+          <span class="btn-text">INITIALIZE RUN ▶</span>
+        </button>
+
+        <!-- Real-time Telemetry Mini-Cards -->
+        <div class="telemetry-box">
+          <div class="telemetry-item">
+            <span class="label">CURRENT STEP</span>
+            <span class="val" id="stat-step">0</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="label">AGENT STATE</span>
+            <span class="val state-pill" id="stat-state">IDLE</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="label">ACTIONS TAKEN</span>
+            <span class="val" id="stat-actions">0</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Center Panel: Live Thought & Action Stream -->
+      <section class="stream-panel glass-panel">
+        <div class="panel-header stream-header">
+          <h3><span class="icon">🔮</span> LIVE THOUGHT & ACTION STREAM</h3>
+          <span class="live-tag">LIVE FEED</span>
+        </div>
+
+        <div class="stream-container" id="stream-logs">
+          <div class="empty-stream-state">
+            <div class="empty-icon">🛰️</div>
+            <h4>MISSION CONTROL READY</h4>
+            <p>Enter an objective on the launchpad and trigger the autonomous agent loop.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Panel: Tools Arsenal & Knowledge Base -->
+      <section class="tools-panel glass-panel">
+        <div class="panel-header">
+          <h3><span class="icon">🛠️</span> TOOL ARSENAL</h3>
+        </div>
+        <div class="tools-list" id="tools-list">
+          <div class="loading-spinner">Loading arsenal...</div>
+        </div>
+
+        <div class="panel-header" style="margin-top: 20px;">
+          <h3><span class="icon">🧠</span> REFLECTION JOURNAL</h3>
+        </div>
+        <div class="reflections-list" id="reflections-list">
+          <div class="reflection-empty">No mistakes recorded. Engine running flawlessly.</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

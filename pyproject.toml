@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nexus-agent"
+version = "1.0.0"
+description = "Next-Gen Autonomous AI Engineering Agent with Dual-Engine UX (TUI + Cyberpunk Glassmorphism Web Visualizer), Self-Healing AST Code Engine, and Sandboxed Tools."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Nexus Agent Core Legion", email = "dev@nexus-agent.ai" }
+]
+keywords = [
+    "ai-agent",
+    "autonomous-agent",
+    "software-engineering",
+    "react-loop",
+    "llm",
+    "code-generation",
+    "self-healing",
+    "developer-tools"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Code Generators",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "pydantic>=2.0.0",
+    "rich>=13.0.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.22.0",
+    "httpx>=0.24.0",
+    "click>=8.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+]
+
+[project.scripts]
+nexus-agent = "nexus_agent.ui.cli:main"
+nexus = "nexus_agent.ui.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["nexus_agent*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

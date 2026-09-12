@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  nexus-agent:
+    build: .
+    container_name: nexus-agent-dashboard
+    ports:
+      - "8000:8000"
+    environment:
+      - NEXUS_LLM_PROVIDER=mock
+      - NEXUS_MAX_ITERATIONS=25
+      - NEXUS_WEB_HOST=0.0.0.0
+      - NEXUS_WEB_PORT=8000
+    volumes:
+      - ./nexus_workspace:/app/workspace
+    restart: unless-stopped
