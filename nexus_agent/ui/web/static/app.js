@@ -94,6 +94,12 @@ function handleStreamEvent(type, data) {
     card.innerHTML = `
       <h4>MISSION ACCOMPLISHED ✔</h4>
       <div class="summary">${escapeHtml(data.final_output)}</div>
+      <div class="star-cta" style="margin-top: 14px; padding-top: 10px; border-top: 1px solid rgba(16, 185, 129, 0.25); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+        <span style="font-size: 0.8rem; color: #a7f3d0; font-weight: 500;">⭐ Enjoyed this run? Support Nexus-Agent with a star!</span>
+        <a href="https://github.com/parkain707/nexus-agent" target="_blank" rel="noopener" style="background: #ffb800; color: #050b14; font-weight: 800; font-size: 0.75rem; padding: 6px 14px; border-radius: 14px; text-decoration: none; box-shadow: 0 0 12px rgba(255, 184, 0, 0.4); display: inline-flex; align-items: center; gap: 4px; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+          ★ Star on GitHub
+        </a>
+      </div>
     `;
     stream.appendChild(card);
     stream.scrollTop = stream.scrollHeight;
