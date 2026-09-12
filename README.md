@@ -57,33 +57,44 @@ Unlike brittle wrapper scripts that blindly chain prompts or hallucinate syntax 
 ### 1. Installation
 
 ```bash
+### ⚡ 1-Click Instant Launch (Easiest)
+
+- **Windows**: Simply double-click **`start.bat`** in the folder! It automatically configures the environment, starts the server, and pops up your browser.
+- **Mac / Linux**: Run `chmod +x start.sh && ./start.sh`.
+
+---
+
+### 💻 Manual CLI Installation
+
+```bash
 # Clone repository
-git clone https://github.com/your-username/nexus-agent.git
+git clone https://github.com/parkain707/nexus-agent.git
 cd nexus-agent
 
-# Install with pip or uv
+# Install dependencies
 pip install -e .
 ```
 
-### 2. Run in Terminal (CLI Mode)
+### 🖥️ Run in Terminal (CLI Mode)
 
 ```bash
-# Runs immediately using the built-in offline mock provider (no API key needed!)
+# Runs immediately with offline demo mode (zero cost, zero API keys!)
 nexus-agent run "Create a fibonacci generator in fib.py and verify with unit tests"
 ```
 
-To run with your favorite LLM provider:
+To run with live cloud LLMs:
 ```bash
 export OPENAI_API_KEY="sk-..."
 nexus-agent run "Refactor database models and optimize queries" --provider openai --model gpt-4o
 ```
 
-### 3. Launch the Web Mission Control Dashboard
+### 🌐 Launch the Web Mission Control Dashboard
 
 ```bash
 nexus-agent web --port 8000
 ```
-Open **`http://localhost:8000`** in your browser to experience the real-time Cyberpunk Glassmorphism Dashboard!
+> [!TIP]
+> Executing `nexus-agent web` automatically opens **`http://localhost:8000`** in your default browser! If port 8000 is occupied, it automatically shifts to the next available port.
 
 ---
 

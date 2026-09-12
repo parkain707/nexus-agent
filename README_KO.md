@@ -54,18 +54,25 @@
 
 ## 🚀 30초 퀵스타트
 
-### 1. 설치
+### ⚡ 원클릭(1-Click) 초간편 실행 (추천)
+
+- **Windows 사용자**: 폴더 안에 있는 **`start.bat`** 파일을 더블 클릭하기만 하면 끝! (가상환경 설정, 서버 가동, 브라우저 자동 팝업까지 한 번에 완료됩니다.)
+- **Mac / Linux 사용자**: 터미널에서 `chmod +x start.sh && ./start.sh` 실행.
+
+---
+
+### 💻 수동 터미널(CLI) 설치
 
 ```bash
 # 저장소 복제
-git clone https://github.com/your-username/nexus-agent.git
+git clone https://github.com/parkain707/nexus-agent.git
 cd nexus-agent
 
-# pip 또는 uv로 설치
+# 필수 의존성 설치
 pip install -e .
 ```
 
-### 2. 터미널 실행 (CLI 모드)
+### 🖥️ 터미널 실행 (CLI 모드)
 
 ```bash
 # 기본 내장된 Mock 엔진을 통해 API 키 없이 즉시 1초 만에 자율 에이전트 동작 확인
@@ -78,12 +85,13 @@ export OPENAI_API_KEY="sk-..."
 nexus-agent run "FastAPI CRUD 백엔드 엔드포인트를 구축하라" --provider openai --model gpt-4o
 ```
 
-### 3. 실시간 사이버펑크 웹 관제 센터 실행
+### 🌐 실시간 사이버펑크 웹 관제 센터 실행
 
 ```bash
 nexus-agent web --port 8000
 ```
-브라우저에서 **`http://localhost:8000`**에 접속하면 실시간 사고 과정 및 도구 실행 텔레메트리를 시각적으로 관제할 수 있습니다.
+> [!TIP]
+> `nexus-agent web`을 실행하면 기본 웹 브라우저가 **`http://localhost:8000` 주소로 자동으로 팝업**됩니다! 만약 8000번 포트가 이미 사용 중이라면 자동으로 다음 번호 포트로 자동 전환됩니다.
 
 ---
 

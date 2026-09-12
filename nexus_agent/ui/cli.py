@@ -133,14 +133,48 @@ def tools():
 @main.command()
 @click.option("--host", default="127.0.0.1", help="Web host interface")
 @click.option("--port", default=8000, help="Web port")
-def web(host: str, port: int):
+@click.option("--no-browser", is_flag=True, help="Do not open browser automatically")
+def web(host: str, port: int, no_browser: bool):
     """Launch the Cyberpunk Glassmorphism Mission Control Web Dashboard."""
+    import socket
+    import threading
+    import time
+    import webbrowser
+
     display_banner()
-    console.print(f"[bold green]🚀 Launching Nexus Web Mission Control on http://{host}:{port}[/bold green]")
+
+    # Check port availability and auto-fallback if busy
+    target_port = port
+    while True:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            if s.connect_ex((host, target_port)) != 0:
+                # Port is available
+                break
+            else:
+                target_port += 1
+                if target_port > port + 10:
+                    break
+
+    if target_port != port:
+        console.print(f"[bold yellow][!] Notice: Port {port} is occupied. Automatically switching to http://{host}:{target_port}[/bold yellow]")
+
+    target_url = f"http://{host}:{target_port}"
+    console.print(f"[bold green][START] Launching Nexus Web Mission Control on {target_url}[/bold green]")
+    console.print("[dim]Press Ctrl+C to terminate the web server.[/dim]\n")
+
+    if not no_browser:
+        def open_browser():
+            time.sleep(1.2)
+            try:
+                webbrowser.open(target_url)
+            except Exception:
+                pass
+        threading.Thread(target=open_browser, daemon=True).start()
+
     try:
         import uvicorn
         from nexus_agent.ui.web.server import app
-        uvicorn.run(app, host=host, port=port, log_level="info")
+        uvicorn.run(app, host=host, port=target_port, log_level="info")
     except ImportError:
         console.print("[bold red]Error: uvicorn is required to run the web server. Install with `pip install uvicorn fastapi`[/bold red]")
 
