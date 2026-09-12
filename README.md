@@ -61,22 +61,22 @@ Unlike brittle wrapper scripts that blindly chain prompts or hallucinate syntax 
 
 ### 1. Installation
 
-```bash
-### ⚡ 1-Click Instant Launch (Easiest)
+#### 📦 1-Line Global Installation (Recommended)
 
-- **Windows**: Simply double-click **`start.bat`** in the folder! It automatically configures the environment, starts the server, and pops up your browser.
+```bash
+pip install "git+https://github.com/parkain707/nexus-agent.git"
+```
+
+#### ⚡ 1-Click Instant Launch (No setup needed)
+
+- **Windows**: Simply double-click **`start.bat`**! It automatically configures the environment, starts the server, and pops up your browser.
 - **Mac / Linux**: Run `chmod +x start.sh && ./start.sh`.
 
----
-
-### 💻 Manual CLI Installation
+#### 💻 From Source (Developer Mode)
 
 ```bash
-# Clone repository
 git clone https://github.com/parkain707/nexus-agent.git
 cd nexus-agent
-
-# Install dependencies
 pip install -e .
 ```
 

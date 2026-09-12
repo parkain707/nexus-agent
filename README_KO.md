@@ -60,21 +60,22 @@
 
 ## 🚀 30초 퀵스타트
 
-### ⚡ 원클릭(1-Click) 초간편 실행 (추천)
+#### 📦 1줄 글로벌 설치 (가장 간편한 방법)
+
+```bash
+pip install "git+https://github.com/parkain707/nexus-agent.git"
+```
+
+#### ⚡ 원클릭(1-Click) 실행 (설치 불필요)
 
 - **Windows 사용자**: 폴더 안에 있는 **`start.bat`** 파일을 더블 클릭하기만 하면 끝! (가상환경 설정, 서버 가동, 브라우저 자동 팝업까지 한 번에 완료됩니다.)
 - **Mac / Linux 사용자**: 터미널에서 `chmod +x start.sh && ./start.sh` 실행.
 
----
-
-### 💻 수동 터미널(CLI) 설치
+#### 💻 소스 코드 직접 클론 (개발자 모드)
 
 ```bash
-# 저장소 복제
 git clone https://github.com/parkain707/nexus-agent.git
 cd nexus-agent
-
-# 필수 의존성 설치
 pip install -e .
 ```
 
