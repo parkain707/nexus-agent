@@ -141,7 +141,113 @@ async function loadArsenal() {
   }
 }
 
+function appendChatBubble(sender, message) {
+  const container = document.getElementById('chat-messages');
+  if (!container) return;
+
+  const bubble = document.createElement('div');
+  bubble.className = `chat-bubble ${sender === 'user' ? 'user-bubble' : 'agent-bubble'}`;
+  const avatar = sender === 'user' ? '👤' : '⚡';
+  const author = sender === 'user' ? 'YOU' : 'NEXUS-AGENT';
+
+  bubble.innerHTML = `
+    <div class="chat-avatar">${avatar}</div>
+    <div class="chat-body">
+      <div class="chat-author">${author}</div>
+      <div class="chat-text">${escapeHtml(message).replace(/\n/g, '<br>')}</div>
+    </div>
+  `;
+  container.appendChild(bubble);
+  container.scrollTop = container.scrollHeight;
+}
+
+async function sendChatMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const provider = document.getElementById('provider-select').value;
+  appendChatBubble('user', text);
+  input.value = '';
+
+  // Append temporary thinking indicator
+  const container = document.getElementById('chat-messages');
+  const typing = document.createElement('div');
+  typing.id = 'chat-typing-indicator';
+  typing.className = 'chat-bubble agent-bubble';
+  typing.innerHTML = `
+    <div class="chat-avatar">⚡</div>
+    <div class="chat-body">
+      <div class="chat-author">NEXUS-AGENT</div>
+      <div class="chat-text" style="color: var(--accent-cyan);">생각하는 중... 💭</div>
+    </div>
+  `;
+  container.appendChild(typing);
+  container.scrollTop = container.scrollHeight;
+
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: text,
+        session_id: 'browser_session',
+        provider: provider
+      })
+    });
+    const indicator = document.getElementById('chat-typing-indicator');
+    if (indicator) indicator.remove();
+
+    if (res.ok) {
+      const data = await res.json();
+      appendChatBubble('agent', data.reply);
+    } else {
+      appendChatBubble('agent', `[오류] 서버 응답 오류 (${res.status})`);
+    }
+  } catch (err) {
+    const indicator = document.getElementById('chat-typing-indicator');
+    if (indicator) indicator.remove();
+    appendChatBubble('agent', `[통신 오류] ${err.message}`);
+  }
+}
+
 function setupEvents() {
+  // Mode switcher
+  const btnMission = document.getElementById('btn-mode-mission');
+  const btnChat = document.getElementById('btn-mode-chat');
+  const viewStream = document.getElementById('view-stream');
+  const viewChat = document.getElementById('view-chat');
+
+  if (btnMission && btnChat) {
+    btnMission.addEventListener('click', () => {
+      btnMission.classList.add('active');
+      btnChat.classList.remove('active');
+      viewStream.style.display = 'flex';
+      viewChat.style.display = 'none';
+    });
+
+    btnChat.addEventListener('click', () => {
+      btnChat.classList.add('active');
+      btnMission.classList.remove('active');
+      viewStream.style.display = 'none';
+      viewChat.style.display = 'flex';
+      document.getElementById('chat-input').focus();
+    });
+  }
+
+  // Chat send
+  const btnChatSend = document.getElementById('btn-chat-send');
+  const chatInput = document.getElementById('chat-input');
+  if (btnChatSend && chatInput) {
+    btnChatSend.addEventListener('click', sendChatMessage);
+    chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        sendChatMessage();
+      }
+    });
+  }
+
   // Preset pills click
   document.querySelectorAll('.preset-tag').forEach(tag => {
     tag.addEventListener('click', () => {
@@ -159,6 +265,11 @@ function setupEvents() {
 
     const provider = document.getElementById('provider-select').value;
     const maxIters = parseInt(document.getElementById('max-iters').value, 10) || 15;
+
+    // Switch to mission view
+    if (btnMission && viewStream) {
+      btnMission.click();
+    }
 
     // Reset counters & stream
     actionCount = 0;

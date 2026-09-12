@@ -104,11 +104,32 @@ class DeterministicMockProvider(BaseLLMProvider):
                 "content": "Running test suite to verify implementation."
             }
 
+        # Check conversational queries
+        lower_msg = last_message.lower()
+        if any(w in lower_msg for w in ["안녕", "hello", "hi", "반가워"]):
+            return {
+                "thought": "User initiated a friendly greeting. Responding warmly and offering assistance.",
+                "tool_calls": [],
+                "content": "안녕하세요! 저는 완전 자율형 AI 엔지니어링 에이전트 **Nexus-Agent**입니다. ⚡\n코드 생성, 아키텍처 설계, 버그 디버깅, 테스트 자동화 등 무엇이든 편하게 말씀해 주세요!"
+            }
+        if any(w in lower_msg for w in ["누구", "who are you", "소개", "what are you"]):
+            return {
+                "thought": "User inquired about agent identity and capabilities.",
+                "tool_calls": [],
+                "content": "저는 **Nexus-Agent (v1.0.0)**입니다.\n- 🧠 **자율 ReAct 루프**: 생각하고, 도구를 선택하고, 결과를 검증합니다.\n- 🛠️ **자가 치유(Self-Healing)**: 테스트 실패 시 스스로 오류를 분석하고 코드를 패치합니다.\n- 💬 **실시간 대화**: 일반 대화부터 복잡한 코딩 태스크까지 완벽히 소화합니다."
+            }
+        if any(w in lower_msg for w in ["대화", "chat", "이야기", "talk"]):
+            return {
+                "thought": "User asking about conversational capability.",
+                "tool_calls": [],
+                "content": "네! 저는 자율 코딩 작업뿐만 아니라 이렇게 자유로운 **실시간 대화와 페어 프로그래밍**도 완벽히 지원합니다. 궁금한 점이나 의논하고 싶은 아이디어가 있으신가요?"
+            }
+
         # Otherwise finish
         return {
-            "thought": "Goal has been successfully achieved with verified outputs.",
+            "thought": "Goal has been successfully processed with verified response.",
             "tool_calls": [],
-            "content": "Task completed successfully. All criteria have been verified."
+            "content": "요청하신 내용을 성공적으로 확인하고 처리하였습니다. 추가로 도움이 필요하신 작업이 있으신가요?"
         }
 
 

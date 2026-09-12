@@ -101,6 +101,66 @@ def run_agent_task(req: RunRequest, loop: asyncio.AbstractEventLoop):
     )
 
 
+# Interactive Chat Sessions
+chat_sessions: Dict[str, NexusAgent] = {}
+
+
+class ChatRequest(BaseModel):
+    message: str
+    session_id: str = "default"
+    provider: str = "mock"
+    model: str = "mock-model"
+    api_key: Optional[str] = None
+
+
+@app.post("/api/chat")
+async def chat_endpoint(req: ChatRequest):
+    """Multi-turn conversational endpoint with persistent session memory."""
+    session_id = req.session_id or "default"
+    if session_id not in chat_sessions:
+        config = AgentConfig(
+            provider=req.provider,
+            model=req.model,
+            max_iterations=10,
+            api_key=req.api_key
+        )
+        agent = NexusAgent(config=config)
+        chat_sessions[session_id] = agent
+    else:
+        agent = chat_sessions[session_id]
+
+    loop = asyncio.get_event_loop()
+
+    def chat_event_callback(event_type: str, data: dict):
+        asyncio.run_coroutine_threadsafe(broadcast_event(event_type, data), loop)
+
+    agent.register_callback(chat_event_callback)
+
+    # Broadcast user message
+    await broadcast_event("chat_message", {
+        "sender": "user",
+        "message": req.message,
+        "session_id": session_id
+    })
+
+    # Run agent step
+    state = agent.run(req.message)
+    reply = state.final_output or "응답을 생성하였습니다."
+
+    # Broadcast agent reply
+    await broadcast_event("chat_message", {
+        "sender": "agent",
+        "message": reply,
+        "session_id": session_id
+    })
+
+    return {
+        "status": "success",
+        "session_id": session_id,
+        "reply": reply
+    }
+
+
 @app.post("/api/run")
 async def start_run(req: RunRequest, background_tasks: BackgroundTasks):
     loop = asyncio.get_event_loop()

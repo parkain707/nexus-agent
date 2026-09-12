@@ -25,6 +25,11 @@
         </div>
       </div>
 
+      <div class="mode-switch">
+        <button class="mode-btn active" id="btn-mode-mission">🚀 MISSION LAUNCHPAD</button>
+        <button class="mode-btn" id="btn-mode-chat">💬 INTERACTIVE CHAT</button>
+      </div>
+
       <div class="system-status">
         <div class="status-indicator">
           <span class="pulse-dot" id="ws-pulse"></span>
@@ -93,18 +98,44 @@
         </div>
       </section>
 
-      <!-- Center Panel: Live Thought & Action Stream -->
+      <!-- Center Panel: Dual Mode (Stream vs Chat) -->
       <section class="stream-panel glass-panel">
-        <div class="panel-header stream-header">
-          <h3><span class="icon">🔮</span> LIVE THOUGHT & ACTION STREAM</h3>
-          <span class="live-tag">LIVE FEED</span>
+        <!-- Autonomous Stream View -->
+        <div id="view-stream" class="panel-view active">
+          <div class="panel-header stream-header">
+            <h3><span class="icon">🔮</span> LIVE THOUGHT & ACTION STREAM</h3>
+            <span class="live-tag">LIVE FEED</span>
+          </div>
+
+          <div class="stream-container" id="stream-logs">
+            <div class="empty-stream-state">
+              <div class="empty-icon">🛰️</div>
+              <h4>MISSION CONTROL READY</h4>
+              <p>Enter an objective on the launchpad and trigger the autonomous agent loop.</p>
+            </div>
+          </div>
         </div>
 
-        <div class="stream-container" id="stream-logs">
-          <div class="empty-stream-state">
-            <div class="empty-icon">🛰️</div>
-            <h4>MISSION CONTROL READY</h4>
-            <p>Enter an objective on the launchpad and trigger the autonomous agent loop.</p>
+        <!-- Interactive Chat View -->
+        <div id="view-chat" class="panel-view" style="display: none; height: 100%; flex-direction: column;">
+          <div class="panel-header stream-header">
+            <h3><span class="icon">💬</span> LIVE INTERACTIVE CHAT & PAIR PROGRAMMING</h3>
+            <span class="live-tag" style="background: rgba(0, 243, 255, 0.15); color: var(--accent-cyan); border-color: rgba(0,243,255,0.3);">ACTIVE DIALOGUE</span>
+          </div>
+
+          <div class="chat-container" id="chat-messages">
+            <div class="chat-bubble agent-bubble">
+              <div class="chat-avatar">⚡</div>
+              <div class="chat-body">
+                <div class="chat-author">NEXUS-AGENT</div>
+                <div class="chat-text">안녕하세요! 저는 차세대 AI 엔지니어링 에이전트 Nexus-Agent입니다. 무엇이든 편하게 말씀해 주세요. 코드 작성, 버그 수정, 아키텍처 토론 등 실시간으로 대화하며 해결해 드립니다!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-input-bar">
+            <input type="text" id="chat-input" placeholder="Nexus-Agent에게 메시지나 질문을 입력하세요... (Enter로 전송)" autocomplete="off">
+            <button id="btn-chat-send" class="btn btn-cyber" style="padding: 8px 18px;">전송 ▶</button>
           </div>
         </div>
       </section>

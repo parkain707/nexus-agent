@@ -38,3 +38,17 @@ def test_web_run_endpoint():
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "started"
+
+
+def test_web_chat_endpoint():
+    payload = {
+        "message": "안녕하세요",
+        "session_id": "test_chat_session",
+        "provider": "mock"
+    }
+    response = client.post("/api/chat", json=payload)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "success"
+    assert "Nexus-Agent" in data["reply"]
+
