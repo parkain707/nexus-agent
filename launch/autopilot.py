@@ -7,6 +7,12 @@ import urllib.parse
 import webbrowser
 import sys
 
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
+
 URLS = [
     {
         "platform": "Hacker News (Show HN)",
@@ -48,7 +54,7 @@ URLS = [
 
 def main():
     print("=" * 65)
-    print("⚡ NEXUS-AGENT // VIRAL LAUNCH AUTOPILOT")
+    print(">> NEXUS-AGENT // VIRAL LAUNCH AUTOPILOT")
     print("=" * 65)
     print("Pre-filling title, links, and content into your active browser tabs...")
     print("You only need to click [Submit / Post] on each tab!\n")
@@ -56,10 +62,13 @@ def main():
     for i, item in enumerate(URLS, 1):
         print(f"[{i}/{len(URLS)}] Launching {item['platform']}...")
         print(f"       -> {item['instruction']}")
-        webbrowser.open(item["url"])
+        try:
+            webbrowser.open(item["url"])
+        except Exception as e:
+            print(f"       -> Error opening browser: {e}")
 
     print("\n" + "=" * 65)
-    print("✅ All 5 launch tabs have been opened in your default browser!")
+    print("[OK] All 5 launch tabs have been opened in your default browser!")
     print("If you are already logged in, you can complete all 5 in under 30 seconds.")
     print("=" * 65)
 
