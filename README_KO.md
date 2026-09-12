@@ -12,7 +12,7 @@
 
 ### 차세대 완전 자율형 AI 소프트웨어 엔지니어링 & 자가 치유(Self-Healing) 에이전트
 
-[![CI](https://img.shields.io/badge/CI-Passing-brightgreen?style=for-the-badge&logo=githubactions&logoColor=white)](.github/workflows/ci.yml)
+[![CI](https://github.com/parkain707/nexus-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/parkain707/nexus-agent/actions/workflows/ci.yml)
 [![Coverage](https://img.shields.io/badge/Coverage-100%25-success?style=for-the-badge&logo=codecov&logoColor=white)]()
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
