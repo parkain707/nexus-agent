@@ -54,3 +54,5 @@ nexus_memory.db
 .coverage
 htmlcov/
 .tox/
+sample.py
+nexus_workspace/
