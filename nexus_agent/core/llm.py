@@ -125,11 +125,19 @@ class DeterministicMockProvider(BaseLLMProvider):
                 "content": "네! 저는 자율 엔지니어링뿐만 아니라 이렇게 자유로운 **실시간 대화와 페어 프로그래밍**도 완벽하게 지원합니다. 궁금하신 점이나 필요한 작업이 있으시면 언제든 말씀해 주세요!"
             }
 
-        # Otherwise finish
+        # Check specific mathematical/scientific knowledge queries
+        if any(w in lower_msg for w in ["리만", "riemann"]):
+            return {
+                "thought": "User inquired about the Riemann Hypothesis in mathematics. Providing detailed conceptual explanation.",
+                "tool_calls": [],
+                "content": "### 📐 리만 가설(Riemann Hypothesis)이란?\n\n1859년 독일의 수학자 **베른하르트 리만(Bernhard Riemann)**이 제시한 수학 역사상 가장 거대하고 아름다운 미해결 난제(밀레니엄 7대 난제 중 하나)입니다.\n\n#### 1. 핵심 정의\n리만 제타 함수 $\\zeta(s) = \\sum_{n=1}^{\\infty} \\frac{1}{n^s}$에서,\n**함숫값이 0이 되는 모든 비자명한 근(Non-trivial zeros)의 실수부는 예외 없이 전부 $\\frac{1}{2}$이다**라는 가설입니다.\n\n#### 2. 왜 현대 수학에서 가장 중요한가?\n- **소수(Prime Numbers)의 규칙성**: 2, 3, 5, 7, 11... 처럼 무질서하게 흩어져 있는 것처럼 보이는 소수의 출현 빈도와 분포가 제타 함수의 영점들과 완벽하게 대응됩니다.\n- **현대 암호학 및 양자물리**: 소수의 비밀은 현대 공개키 암호(RSA) 및 복잡계 양자 역학의 에너지 준위 분포와도 깊은 연관이 있습니다.\n\n> 💡 **안내**: 현재 **[Deterministic Mock (오프라인 모드)]**에서 지식 응답을 제공하였습니다. 드롭다운에서 OpenAI, Gemini, Ollama 등 실제 LLM Provider를 선택하시면 세상의 모든 심층 질의응답을 무제한으로 수행할 수 있습니다!"
+            }
+
+        # Otherwise informative finish
         return {
-            "thought": "Goal has been successfully processed with verified response.",
+            "thought": "Goal has been processed. Providing informative offline guide.",
             "tool_calls": [],
-            "content": "요청하신 내용을 성공적으로 확인하고 처리하였습니다. 추가로 도움이 필요하신 작업이 있으신가요?"
+            "content": f"'{last_message}'에 대한 요청을 확인했습니다.\n\n💡 **현재 [Deterministic Mock (오프라인 모드)]로 동작 중입니다.**\n- 오프라인 모드는 API 키 결제 없이 **코드 생성, AST 문법 검증, 자가 치유(Self-Healing)** 엔지니어링 루프를 100% 무료로 체험하기 위한 모의 엔진입니다.\n- 리만 가설과 같은 실시간 일반 지식 탐색이나 방대한 지능형 대화를 원하시면, 좌측 드롭다운에서 **OpenAI / Claude / Gemini / Ollama** Provider를 선택해 주세요!"
         }
 
 
