@@ -141,6 +141,33 @@ async function loadArsenal() {
   }
 }
 
+function renderMarkdown(text) {
+  if (!text) return '';
+  let escaped = escapeHtml(text);
+
+  // 1. Code blocks: ```lang \n code ```
+  escaped = escaped.replace(/```([a-zA-Z0-9_]*)\n([\s\S]*?)```/g, (match, lang, code) => {
+    return `<pre class="code-block" style="background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px; margin: 8px 0; border: 1px solid rgba(0,243,255,0.2); overflow-x: auto; font-family: var(--font-mono); font-size: 0.8rem; color: #a5f3fc;"><div style="font-size: 0.65rem; color: var(--accent-cyan); margin-bottom: 4px;">${lang || 'CODE'}</div><code>${code.trim()}</code></pre>`;
+  });
+
+  // 2. Inline code: `code`
+  escaped = escaped.replace(/`([^`]+)`/g, '<code style="background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); color: #a5f3fc; border: 1px solid rgba(255,255,255,0.08);">$1</code>');
+
+  // 3. Bold: **text**
+  escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong style="color: var(--accent-cyan); font-weight: 700;">$1</strong>');
+
+  // 4. Italic: *text*
+  escaped = escaped.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+  // 5. Bullet items: - item
+  escaped = escaped.replace(/(?:^|\n)\s*-\s+(.*?)(?=(?:\n|$))/g, '\n<div style="display: flex; gap: 8px; margin: 5px 0; align-items: flex-start;"><span style="color: var(--accent-cyan); font-size: 0.9rem;">•</span><div>$1</div></div>');
+
+  // 6. Convert newlines to <br>
+  escaped = escaped.replace(/\n/g, '<br>');
+
+  return escaped;
+}
+
 function appendChatBubble(sender, message) {
   const container = document.getElementById('chat-messages');
   if (!container) return;
@@ -154,7 +181,7 @@ function appendChatBubble(sender, message) {
     <div class="chat-avatar">${avatar}</div>
     <div class="chat-body">
       <div class="chat-author">${author}</div>
-      <div class="chat-text">${escapeHtml(message).replace(/\n/g, '<br>')}</div>
+      <div class="chat-text">${renderMarkdown(message)}</div>
     </div>
   `;
   container.appendChild(bubble);

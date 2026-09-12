@@ -116,13 +116,13 @@ class DeterministicMockProvider(BaseLLMProvider):
             return {
                 "thought": "User inquired about agent identity and capabilities.",
                 "tool_calls": [],
-                "content": "저는 **Nexus-Agent (v1.0.0)**입니다.\n- 🧠 **자율 ReAct 루프**: 생각하고, 도구를 선택하고, 결과를 검증합니다.\n- 🛠️ **자가 치유(Self-Healing)**: 테스트 실패 시 스스로 오류를 분석하고 코드를 패치합니다.\n- 💬 **실시간 대화**: 일반 대화부터 복잡한 코딩 태스크까지 완벽히 소화합니다."
+                "content": "안녕하세요! 저는 완전 자율형 소프트웨어 엔지니어링 AI 에이전트 **Nexus-Agent**입니다.\n\n주요 기능 및 특징:\n- 🧠 **자율 ReAct 엔진**: 목표를 스스로 분석하고 적합한 도구를 선택하여 실행합니다.\n- 🛠️ **자가 치유(Self-Healing)**: 테스트 에러가 발생하면 원인을 역추적하여 코드를 자동으로 패치합니다.\n- 💬 **실시간 페어 프로그래밍**: 가벼운 대화부터 아키텍처 설계, 코드 작성까지 자유롭게 대화할 수 있습니다.\n\n어떤 프로젝트나 코딩 작업을 함께 시작해 볼까요?"
             }
         if any(w in lower_msg for w in ["대화", "chat", "이야기", "talk"]):
             return {
                 "thought": "User asking about conversational capability.",
                 "tool_calls": [],
-                "content": "네! 저는 자율 코딩 작업뿐만 아니라 이렇게 자유로운 **실시간 대화와 페어 프로그래밍**도 완벽히 지원합니다. 궁금한 점이나 의논하고 싶은 아이디어가 있으신가요?"
+                "content": "네! 저는 자율 엔지니어링뿐만 아니라 이렇게 자유로운 **실시간 대화와 페어 프로그래밍**도 완벽하게 지원합니다. 궁금하신 점이나 필요한 작업이 있으시면 언제든 말씀해 주세요!"
             }
 
         # Otherwise finish
