@@ -27,3 +27,12 @@ def test_cli_bench():
     assert result.exit_code == 0
     assert "GRADE: S+" in result.output
     assert "AST Syntax Engine" in result.output
+
+
+def test_cli_radar():
+    runner = CliRunner()
+    result = runner.invoke(main, ["radar"])
+    assert result.exit_code == 0
+    assert "GROWTH & STARGAZER RADAR" in result.output
+    assert "GitHub Stars" in result.output
+

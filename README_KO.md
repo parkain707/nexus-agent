@@ -16,6 +16,9 @@
 [![Coverage](https://img.shields.io/badge/Coverage-100%25-success?style=for-the-badge&logo=codecov&logoColor=white)]()
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/parkain707/nexus-agent?color=orange&style=for-the-badge&logo=github)](https://github.com/parkain707/nexus-agent/releases)
+[![GitHub Stars](https://img.shields.io/github/stars/parkain707/nexus-agent?style=social)](https://github.com/parkain707/nexus-agent/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/parkain707/nexus-agent?style=social)](https://github.com/parkain707/nexus-agent/network/members)
 
 [**English Document (README.md)**](README.md) | [**한국어 공식 설명서**](README_KO.md)
 
@@ -179,6 +182,12 @@ Nexus-Agent를 개발자 커뮤니티에 공유하거나 오픈소스 생태계�
 - [X (구 Twitter) 5부작 바이럴 스레드](launch/TWITTER_X_THREAD.md)
 - [Velog / 브런치 심층 기술 블로그 글](launch/VELOG_POST_KO.md)
 - [디스코드 & 카카오 오픈채팅방 공유 문구](launch/DISCORD_COMMUNITIES.md)
+
+---
+
+## ⭐ Star History (스타 성장 추이)
+
+[![Star History Chart](https://api.star-history.com/svg?repos=parkain707/nexus-agent&type=Date)](https://star-history.com/#parkain707/nexus-agent&Date)
 
 ---
 

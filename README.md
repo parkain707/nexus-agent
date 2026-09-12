@@ -16,7 +16,9 @@
 [![Coverage](https://img.shields.io/badge/Coverage-100%25-success?style=for-the-badge&logo=codecov&logoColor=white)]()
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-purple?style=for-the-badge)](CONTRIBUTING.md)
+[![Release](https://img.shields.io/github/v/release/parkain707/nexus-agent?color=orange&style=for-the-badge&logo=github)](https://github.com/parkain707/nexus-agent/releases)
+[![GitHub Stars](https://img.shields.io/github/stars/parkain707/nexus-agent?style=social)](https://github.com/parkain707/nexus-agent/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/parkain707/nexus-agent?style=social)](https://github.com/parkain707/nexus-agent/network/members)
 
 [**English**](README.md) | [**한국어 설명서 (README_KO.md)**](README_KO.md)
 
@@ -256,6 +258,12 @@ Looking to share or contribute to Nexus-Agent? Check out our ready-to-use launch
 - [Reddit r/LocalLLaMA & r/Python](launch/REDDIT_LOCALLAMA.md)
 - [X/Twitter Viral Thread](launch/TWITTER_X_THREAD.md)
 - [Velog / Technical Blog Post](launch/VELOG_POST_KO.md)
+
+---
+
+## ⭐ Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=parkain707/nexus-agent&type=Date)](https://star-history.com/#parkain707/nexus-agent&Date)
 
 ---
 

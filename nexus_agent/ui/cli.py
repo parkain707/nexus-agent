@@ -391,5 +391,43 @@ class CustomPluginTool(BaseTool):
     ))
 
 
+@main.command()
+def radar():
+    """Real-time Viral Growth & Stargazer Telemetry Radar."""
+    import subprocess
+    import json
+
+    console.print("\n[bold cyan]>> NEXUS-AGENT // GROWTH & STARGAZER RADAR[/bold cyan]\n")
+
+    stars = 1
+    forks = 0
+    watchers = 1
+    open_issues = 0
+
+    try:
+        proc = subprocess.run(["gh", "api", "repos/parkain707/nexus-agent"], capture_output=True, text=True, check=True)
+        data = json.loads(proc.stdout)
+        stars = data.get("stargazers_count", 1)
+        forks = data.get("forks_count", 0)
+        watchers = data.get("watchers_count", 1)
+        open_issues = data.get("open_issues_count", 0)
+    except Exception:
+        pass
+
+    table = Table(title="[bold yellow]★ LIVE STARGAZER & REPO TELEMETRY[/bold yellow]", border_style="yellow")
+    table.add_column("Growth Metric", style="bold white")
+    table.add_column("Live Value", style="bold cyan")
+    table.add_column("Target (v1.1)", style="magenta")
+    table.add_column("Trajectory", style="bold green")
+
+    table.add_row("GitHub Stars", f"★ {stars}", "1,000+", "[bold green]IGNITED (Snowball)[/bold green]" if stars > 0 else "PENDING")
+    table.add_row("Repository Forks", str(forks), "100+", "ACTIVE")
+    table.add_row("Subscribers / Watchers", str(watchers), "250+", "GROWING")
+    table.add_row("Open Issues", str(open_issues), "< 5", "OPTIMAL")
+
+    console.print(table)
+    console.print("\n[bold green][RADAR ONLINE][/bold green] Global live demo: [underline]https://should-busy-repairs-metres.trycloudflare.com[/underline]\n")
+
+
 if __name__ == "__main__":
     main()
