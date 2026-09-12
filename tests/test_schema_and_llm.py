@@ -64,3 +64,11 @@ def test_factory_llm_provider():
     config = AgentConfig(provider="mock")
     provider = get_llm_provider(config)
     assert isinstance(provider, DeterministicMockProvider)
+
+    # Test Gemini Provider factory
+    gemini_cfg = AgentConfig(provider="gemini", api_key="dummy-key")
+    from nexus_agent.core.llm import GeminiProvider
+    g_provider = get_llm_provider(gemini_cfg)
+    assert isinstance(g_provider, GeminiProvider)
+    assert g_provider.model == "gemini-2.5-flash"
+

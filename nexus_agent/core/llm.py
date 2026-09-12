@@ -209,11 +209,81 @@ class OpenAICompatibleProvider(BaseLLMProvider):
         }
 
 
+class GeminiProvider(BaseLLMProvider):
+    """Native Google Gemini REST API Provider."""
+
+    def __init__(self, config: AgentConfig):
+        super().__init__(config)
+        import os
+        import httpx
+        self.client = httpx.Client(timeout=45.0)
+        self.api_key = config.api_key or os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+        self.model = config.model or "gemini-2.5-flash"
+        if not self.model or self.model in ["mock-model", "gpt-4o"]:
+            self.model = "gemini-2.5-flash"
+
+    def generate(
+        self,
+        messages: List[Message],
+        tools_schema: Optional[List[Dict[str, Any]]] = None,
+    ) -> Dict[str, Any]:
+        if not self.api_key or self.api_key == "no-key":
+            return {
+                "thought": "Gemini API key missing.",
+                "tool_calls": [],
+                "content": "[Google Gemini 오류] GEMINI_API_KEY가 설정되지 않았습니다. .env 파일에 GEMINI_API_KEY를 입력해 주세요."
+            }
+
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent?key={self.api_key}"
+
+        contents = []
+        for m in messages:
+            role = "user" if m.role == "user" else "model"
+            contents.append({
+                "role": role,
+                "parts": [{"text": m.content}]
+            })
+
+        payload = {"contents": contents}
+
+        try:
+            resp = self.client.post(url, json=payload)
+            if resp.status_code != 200:
+                return {
+                    "thought": f"Gemini API returned status {resp.status_code}",
+                    "tool_calls": [],
+                    "content": f"[Google Gemini 오류: HTTP {resp.status_code}]\n{resp.text}"
+                }
+            data = resp.json()
+            candidates = data.get("candidates", [])
+            if not candidates:
+                return {
+                    "thought": "No response candidates from Gemini.",
+                    "tool_calls": [],
+                    "content": "Gemini로부터 응답을 수신하지 못했습니다."
+                }
+            parts = candidates[0].get("content", {}).get("parts", [])
+            text = "".join([p.get("text", "") for p in parts])
+            return {
+                "thought": "Successfully generated response via Google Gemini.",
+                "tool_calls": [],
+                "content": text
+            }
+        except Exception as e:
+            return {
+                "thought": f"Gemini connection error: {str(e)}",
+                "tool_calls": [],
+                "content": f"[Google Gemini 통신 오류] {str(e)}"
+            }
+
+
 def get_llm_provider(config: AgentConfig) -> BaseLLMProvider:
     """Factory function for LLM providers."""
     provider_name = (config.provider or "mock").lower()
     if provider_name == "mock":
         return DeterministicMockProvider(config)
+    elif provider_name in ["gemini", "google"]:
+        return GeminiProvider(config)
     elif provider_name in ["openai", "deepseek", "ollama", "vllm"]:
         return OpenAICompatibleProvider(config)
     else:
