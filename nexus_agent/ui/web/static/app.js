@@ -141,6 +141,53 @@ async function loadArsenal() {
   }
 }
 
+async function loadSnapshots() {
+  try {
+    const res = await fetch('/api/snapshots');
+    const snaps = await res.json();
+    const list = document.getElementById('snapshots-list');
+    if (!list) return;
+    if (snaps.length === 0) {
+      list.innerHTML = '<div class="snapshot-empty" style="font-size: 0.75rem; color: var(--text-muted);">No snapshots recorded yet.</div>';
+      return;
+    }
+    list.innerHTML = '';
+    snaps.forEach(s => {
+      const item = document.createElement('div');
+      item.className = 'tool-item';
+      item.style.flexDirection = 'column';
+      item.style.alignItems = 'flex-start';
+      item.style.gap = '4px';
+      item.innerHTML = `
+        <div style="display: flex; justify-content: space-between; width: 100%;">
+          <span class="tool-name" style="font-size: 0.75rem;">#${s.id} ${escapeHtml(s.file_path)}</span>
+          <button class="btn-rollback" data-id="${s.id}" style="background: rgba(244,63,94,0.15); border: 1px solid var(--accent-rose); color: #fecdd3; font-size: 0.65rem; border-radius: 4px; padding: 2px 6px; cursor: pointer;">↺ ROLLBACK</button>
+        </div>
+        <div style="font-size: 0.65rem; color: var(--text-muted);">${s.created_at}</div>
+      `;
+      list.appendChild(item);
+    });
+
+    document.querySelectorAll('.btn-rollback').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = parseInt(btn.getAttribute('data-id'), 10);
+        if (confirm(`Snapshot #${id} 상태로 코드를 되돌리시겠습니까?`)) {
+          const r = await fetch('/api/rollback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ snapshot_id: id })
+          });
+          const resData = await r.json();
+          alert(resData.message || 'Rollback executed successfully!');
+          loadSnapshots();
+        }
+      });
+    });
+  } catch (e) {
+    console.error('Failed to load snapshots', e);
+  }
+}
+
 function renderMarkdown(text) {
   if (!text) return '';
   let escaped = escapeHtml(text);
@@ -327,5 +374,6 @@ function setupEvents() {
 document.addEventListener('DOMContentLoaded', () => {
   initWebSocket();
   loadArsenal();
+  loadSnapshots();
   setupEvents();
 });

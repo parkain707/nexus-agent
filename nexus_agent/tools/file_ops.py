@@ -139,7 +139,16 @@ class EditFileTool(BaseTool):
             n=2
         ))
         diff_summary = "".join(diff[:20])
-        return f"Successfully edited '{path}'.\nDiff:\n{diff_summary}"
+
+        # Record Time-Travel snapshot
+        try:
+            from nexus_agent.core.memory import PersistentKnowledgeStore
+            snap_id = PersistentKnowledgeStore().record_snapshot(path, original, new_content, diff_summary)
+            snap_note = f"\n[Time-Travel Snapshot #{snap_id} created - reversible at any time]"
+        except Exception:
+            snap_note = ""
+
+        return f"Successfully edited '{path}'.{snap_note}\nDiff:\n{diff_summary}"
 
 
 class ListDirInput(BaseModel):

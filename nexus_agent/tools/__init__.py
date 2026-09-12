@@ -8,6 +8,7 @@ from nexus_agent.tools.shell_ops import ExecuteCommandTool
 from nexus_agent.tools.code_search import GrepSearchTool, FindFilesTool
 from nexus_agent.tools.git_ops import GitStatusTool, GitDiffTool, GitCommitTool
 from nexus_agent.tools.web_search import WebFetchTool, WebSearchTool
+from nexus_agent.tools.diagram import GenerateDiagramTool
 
 
 def create_default_registry() -> ToolRegistry:
@@ -25,6 +26,7 @@ def create_default_registry() -> ToolRegistry:
     registry.register(GitCommitTool())
     registry.register(WebFetchTool())
     registry.register(WebSearchTool())
+    registry.register(GenerateDiagramTool())
     return registry
 
 
@@ -44,4 +46,5 @@ __all__ = [
     "GitCommitTool",
     "WebFetchTool",
     "WebSearchTool",
+    "GenerateDiagramTool",
 ]

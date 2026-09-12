@@ -80,6 +80,29 @@ async def get_tools():
     ]
 
 
+@app.get("/api/snapshots")
+async def get_snapshots():
+    from nexus_agent.core.memory import PersistentKnowledgeStore
+    store = PersistentKnowledgeStore()
+    return store.list_snapshots(limit=10)
+
+
+class RollbackRequest(BaseModel):
+    snapshot_id: int
+
+
+@app.post("/api/rollback")
+async def rollback_endpoint(req: RollbackRequest):
+    from nexus_agent.core.memory import PersistentKnowledgeStore
+    store = PersistentKnowledgeStore()
+    try:
+        result = store.rollback_snapshot(req.snapshot_id)
+        await broadcast_event("time_travel_rollback", result)
+        return result
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
 def run_agent_task(req: RunRequest, loop: asyncio.AbstractEventLoop):
     config = AgentConfig(
         provider=req.provider,

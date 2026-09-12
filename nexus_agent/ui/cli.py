@@ -301,5 +301,95 @@ def config(provider: str, model: str, api_key: str):
     console.print(f"[dim]Provider: {provider} | Model: {model}[/dim]\n")
 
 
+@main.command()
+@click.argument("template", type=click.Choice(["fastapi", "cli", "custom-tool"], case_sensitive=False))
+@click.option("--name", default=None, help="Target file or project name")
+def scaffold(template: str, name: str):
+    """Instantly scaffold production-grade boilerplate modules."""
+    display_banner()
+    template = template.lower()
+    console.print(f"[bold cyan][SCAFFOLD] Generating '{template}' architecture template...[/bold cyan]\n")
+
+    if template == "fastapi":
+        target = name or "api_service.py"
+        code = '''from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
+from typing import List, Optional
+
+app = FastAPI(title="Nexus Microservice API", version="1.0.0")
+
+class Item(BaseModel):
+    id: int
+    name: str = Field(..., description="Item title")
+    description: Optional[str] = None
+
+db: List[Item] = []
+
+@app.get("/health")
+def health_check():
+    return {"status": "healthy", "service": "online"}
+
+@app.get("/items", response_model=List[Item])
+def list_items():
+    return db
+
+@app.post("/items", response_model=Item)
+def create_item(item: Item):
+    db.append(item)
+    return item
+'''
+    elif template == "cli":
+        target = name or "cli_tool.py"
+        code = '''import click
+from rich.console import Console
+from rich.panel import Panel
+
+console = Console()
+
+@click.group()
+def cli():
+    """Nexus CLI Developer Utility."""
+    pass
+
+@cli.command()
+@click.argument("query")
+def run(query: str):
+    """Process developer query."""
+    console.print(Panel(f"[bold green]Running Query:[/bold green] {query}", border_style="cyan"))
+
+if __name__ == "__main__":
+    cli()
+'''
+    else:  # custom-tool
+        target = name or "custom_plugin_tool.py"
+        code = '''from pydantic import BaseModel, Field
+from nexus_agent.core.schema import ToolCategory
+from nexus_agent.tools.base import BaseTool
+
+class PluginInput(BaseModel):
+    parameter: str = Field(..., description="Action argument")
+
+class CustomPluginTool(BaseTool):
+    name = "custom_action"
+    description = "Executes an advanced domain-specific automated action."
+    category = ToolCategory.CUSTOM
+    args_schema = PluginInput
+
+    def run(self, parameter: str) -> str:
+        # Business logic goes here
+        return f"Custom action executed successfully with: {parameter}"
+'''
+
+    with open(target, "w", encoding="utf-8") as f:
+        f.write(code)
+
+    console.print(Panel(
+        f"[bold green]✔ Successfully generated '[bold white]{target}[/bold white]'![/bold green]\n"
+        f"[dim]Template: {template} | Status: Ready to execute[/dim]",
+        title="[bold green]SCAFFOLD COMPLETE[/bold green]",
+        border_style="green"
+    ))
+
+
 if __name__ == "__main__":
     main()

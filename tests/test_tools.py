@@ -93,3 +93,13 @@ def test_search_tools(tmp_path):
     find_res = find_tool.run(pattern="*.py", path=str(tmp_path))
     assert "alpha.py" in find_res
     assert "beta.txt" not in find_res
+
+
+def test_diagram_tool():
+    from nexus_agent.tools.diagram import GenerateDiagramTool
+    diag = GenerateDiagramTool()
+    out = diag.run(title="System Architecture", diagram_type="flowchart", mermaid_code="A[User] --> B[API]")
+    assert "### [Architecture Diagram] System Architecture" in out
+    assert "graph TD" in out
+    assert "A[User] --> B[API]" in out
+

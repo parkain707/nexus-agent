@@ -70,7 +70,74 @@ class PersistentKnowledgeStore:
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
             """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS file_snapshots (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    file_path TEXT NOT NULL,
+                    content_before TEXT NOT NULL,
+                    content_after TEXT NOT NULL,
+                    diff_summary TEXT,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
             conn.commit()
+
+    def record_snapshot(self, file_path: str, content_before: str, content_after: str, diff_summary: str = "") -> int:
+        """Store a reversible snapshot before file modification."""
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO file_snapshots (file_path, content_before, content_after, diff_summary)
+                VALUES (?, ?, ?, ?)
+            """, (file_path, content_before, content_after, diff_summary))
+            conn.commit()
+            return cursor.lastrowid
+
+    def list_snapshots(self, limit: int = 15) -> List[Dict[str, Any]]:
+        """List recent reversible code snapshots."""
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT id, file_path, diff_summary, created_at
+                FROM file_snapshots
+                ORDER BY id DESC LIMIT ?
+            """, (limit,))
+            rows = cursor.fetchall()
+            return [
+                {
+                    "id": r[0],
+                    "file_path": r[1],
+                    "diff_summary": r[2],
+                    "created_at": r[3]
+                }
+                for r in rows
+            ]
+
+    def rollback_snapshot(self, snapshot_id: int) -> Dict[str, Any]:
+        """Roll back file to its exact state before the snapshot."""
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT file_path, content_before
+                FROM file_snapshots WHERE id = ?
+            """, (snapshot_id,))
+            row = cursor.fetchone()
+            if not row:
+                raise ValueError(f"Snapshot ID {snapshot_id} not found.")
+
+            file_path, content_before = row[0], row[1]
+            from pathlib import Path
+            p = Path(file_path)
+            p.parent.mkdir(parents=True, exist_ok=True)
+            with open(p, "w", encoding="utf-8") as f:
+                f.write(content_before)
+
+            return {
+                "success": True,
+                "snapshot_id": snapshot_id,
+                "file_path": file_path,
+                "message": f"Successfully restored '{file_path}' to state before snapshot {snapshot_id}."
+            }
 
     def record_knowledge(self, key: str, value: str, category: str = "general"):
         with self._get_conn() as conn:
