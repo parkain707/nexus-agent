@@ -22,6 +22,9 @@
 
 </div>
 
+> 🌐 **Live Interactive Web Demo**: [https://should-busy-repairs-metres.trycloudflare.com](https://should-busy-repairs-metres.trycloudflare.com)  
+> *Experience the Cyberpunk Glassmorphic Mission Control in real-time with zero installation!*
+
 ---
 
 ## ⚡ What is Nexus-Agent?

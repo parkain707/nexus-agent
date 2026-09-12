@@ -21,6 +21,9 @@
 
 </div>
 
+> 🌐 **실시간 온라인 라이브 웹 데모**: [https://should-busy-repairs-metres.trycloudflare.com](https://should-busy-repairs-metres.trycloudflare.com)  
+> *설치 없이 브라우저에서 사이버펑크 글래스모피즘 미션 컨트롤과 대화형 인터랙션을 즉시 체험하세요!*
+
 ---
 
 ## ⚡ 넥서스 에이전트(Nexus-Agent)란?

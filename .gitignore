@@ -56,3 +56,5 @@ htmlcov/
 .tox/
 sample.py
 nexus_workspace/
+cloudflared.exe
+cloudflared.log
