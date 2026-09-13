@@ -49,7 +49,7 @@ async def broadcast_event(event_type: str, data: dict):
             active_connections.remove(d)
 
 
-@app.get("/", response_class=HTMLResponse)
+@app.api_route("/", methods=["GET", "HEAD"], response_class=HTMLResponse)
 async def serve_index():
     index_path = STATIC_DIR / "index.html"
     if index_path.exists():
