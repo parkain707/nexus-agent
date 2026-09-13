@@ -28,7 +28,7 @@
   <img src="docs/assets/hero-banner.jpg" alt="Nexus-Agent Cyberpunk Mission Control" width="100%" />
 </p>
 
-> 🌐 **Live Interactive Web Demo**: [https://should-busy-repairs-metres.trycloudflare.com](https://should-busy-repairs-metres.trycloudflare.com)  
+> 🌐 **Live Interactive Web Demo**: [https://furnished-altered-incurred-webshots.trycloudflare.com](https://furnished-altered-incurred-webshots.trycloudflare.com)  
 > *Experience the Cyberpunk Glassmorphic Mission Control in real-time with zero installation!*
 
 ---
