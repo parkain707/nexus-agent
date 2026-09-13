@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Dict, List, Optional
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, BackgroundTasks
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.responses import HTMLResponse, FileResponse, PlainTextResponse, Response
 from pydantic import BaseModel
 
 from nexus_agent.version import __version__
@@ -55,6 +55,79 @@ async def serve_index():
     if index_path.exists():
         return FileResponse(str(index_path))
     return "<h1>Nexus-Agent Mission Control</h1><p>Static index.html not yet initialized.</p>"
+
+
+@app.get("/robots.txt", response_class=PlainTextResponse)
+async def robots():
+    content = """User-agent: *
+Allow: /
+Crawl-delay: 0
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+Sitemap: https://furnished-altered-incurred-webshots.trycloudflare.com/sitemap.xml
+"""
+    return PlainTextResponse(content, media_type="text/plain")
+
+
+@app.get("/sitemap.xml", response_class=Response)
+async def sitemap():
+    content = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://furnished-altered-incurred-webshots.trycloudflare.com/</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://github.com/parkain707/nexus-agent</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://github.com/parkain707/nexus-agent/releases/tag/v1.0.0</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
+"""
+    return Response(content=content, media_type="application/xml")
+
+
+@app.get("/nexusagent2026indexnow.txt", response_class=PlainTextResponse)
+async def indexnow_key():
+    return PlainTextResponse("nexusagent2026indexnow", media_type="text/plain")
 
 
 @app.get("/api/status")
